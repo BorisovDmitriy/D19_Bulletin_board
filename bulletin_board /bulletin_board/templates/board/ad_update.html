@@ -1,0 +1,23 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %} Редактирование объявления {% endblock title %}
+
+{% block content %}
+<h3>Информация объявления (редактирование)</h3>
+<form method="POST">
+    {% csrf_token %}
+    {{ form }} <!-- Теперь нам нужна только готовая форма и кнопка -->
+
+    <hr>
+    <input type="submit" value="Сохранить">
+</form>
+{% endblock content %}
+
+{% block comments %}
+{% endblock comments %}
+
+{% block sidewidgets %}
+{% endblock sidewidgets %}
+
+{% block footer %}
+{% endblock footer %}

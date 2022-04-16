@@ -1,0 +1,24 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %} Создание объявления {% endblock title %}
+
+{% block content %}
+<h3 style="text-align: center;">Информация об объявлении</h3>
+<form method="POST">
+    {% csrf_token %}
+    <p style="text-align: center;">{{ form }} </p> <!-- Теперь нам нужна только готовая форма и кнопка -->
+
+    <hr>
+    <p style="text-align: center;"> <input type="submit" value="Сохранить"></p>
+</form>
+{% endblock content %}
+
+{% block comments %}
+{% endblock comments %}
+
+{% block sidewidgets %}
+{% endblock sidewidgets %}
+
+{% block footer %}
+{% endblock footer %}
+

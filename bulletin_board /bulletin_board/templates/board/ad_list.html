@@ -1,0 +1,78 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %} Доска объявлений {% endblock title %}
+<!-- В контенте на странице мы выводим все новости -->
+{% block content %}
+        <!-- Page content-->
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-8">
+
+                    <!-- Post content-->
+                    <article>
+                        <!-- Post header-->
+                        <header class="mb-4">
+                            <!-- Post title-->
+                            <h1 class="fw-bolder mb-1">Добро пожаловать на доску объявлений!</h1>
+                            <!-- Post meta content-->
+                            <div class="text-muted fst-italic mb-2">Обубликовано 6 апреля 2022</div>
+                            <!-- Post categories-->
+                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Вэб дизайн</a>
+                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Халява</a>
+                        </header>
+                    </article>
+                    <h3>Все объявления </h3>
+                    {% if ads %}
+                    <h3>Всего новостей:{{ ads|length }} {% endif %}</h3>
+                    <p style="text-align: right;"> <a href="{% url 'ad_create' %}">Опубликовать новое объявление </a></p>
+                    <hr>
+                    <hr>
+                    {% if ads %}
+                    <ul class="list-unstyled">
+                    {% for ad in ads %}
+                    <li class="media my-4 p-2 border">
+                    <a href="{% url 'ad' ad.id %}"> {{ ad.article|truncatewords:2}} </a>
+                    <div>{{ ad.text_ad|truncatechars:50 }}</div>
+                    <a href="{% url 'ad_update' ad.id %}"><u>Редактировать</u></a>
+                    <a href="{% url 'ad_delete' ad.id %}"><u> Удалить </u></a>
+                    <p style="text-align: right;"> <em>Опубликовано: {{ ad.create_time|date:'d M Y'}}</em></p>
+                    </li>
+                    {% endfor %}
+                    </ul>
+
+                    <!-- D7.2 начало блока пагинации-->
+
+                    {% if is_paginated%}<!-- Проверяем, что поддерживается постраничный вывод -->
+
+                    <!-- Если доступна предыдущая страница, то даём ссылку на неё и самую первую страницу -->
+                    {% if page_obj.has_previous %}
+                    <a href="?page=1">First</a>
+                    <a href="?page={{page_obj.previous_page_number}}"><<<</a>
+                    {% endif %}
+                    <!-- Показываем только текущую страницу и ближайшие к ней, чтобы список не тянулся и не захламлял страницу -->
+                    {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <a>{{ num }}</a>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a href="?page={{ num }}">{{ num }}</a>
+                    {% endif %}
+                    {% endfor %}
+                    <!-- Если есть следующая страница, то даём ссылку на неё и на самую последнюю страницу -->
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">>>></a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                    {% endif %}
+
+                    {% endif %}
+                    <!-- D7.2 конец блока пагинации-->
+                    {% else %}
+                    <h2> Новостей нет!! </h2> <!-- Если новостей нет, то говорим, что "Новостей нет!" ;) -->
+                    {% endif %}
+                    <hr>
+                    <hr>
+                    {% endblock content %}
+                </div>
+            </div>
+        </div>
+
+

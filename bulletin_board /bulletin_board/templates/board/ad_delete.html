@@ -1,0 +1,31 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Удаление объявления
+{% endblock title %}
+
+
+{% block content %}
+<h2>Вы действительно хотите удалить данный пост?</h2>
+
+    <h1>{{ad.article|truncatewords:2}}</h1>
+    <p>{{ ad.text_ad}}</p>
+    <p>Автор: <b>{{ ad.author.user.username }}</b></p>
+    <p><i>Дата публикации {{ ad.create_time|date:"d M Y H:i" }}</i></p>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <hr>
+    <input type="submit" value="Подтвердить">
+</form>
+{% endblock content %}
+
+{% block comments %}
+{% endblock comments %}
+
+{% block sidewidgets %}
+{% endblock sidewidgets %}
+
+{% block footer %}
+{% endblock footer %}
