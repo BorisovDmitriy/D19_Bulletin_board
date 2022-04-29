@@ -1,0 +1,29 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Удаление объявления
+{% endblock title %}
+
+
+{% block content %}
+<h2>Вы действительно хотите удалить этот комментарий?</h2>
+
+
+    <p>{{ response.text_response}}</p>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <hr>
+    <input type="submit" value="Подтвердить">
+</form>
+{% endblock content %}
+
+{% block comments %}
+{% endblock comments %}
+
+{% block sidewidgets %}
+{% endblock sidewidgets %}
+
+{% block footer %}
+{% endblock footer %}

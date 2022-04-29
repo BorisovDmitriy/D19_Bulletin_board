@@ -1,0 +1,5 @@
+pip install django
+python -m pip install django-filter
+pip install django-allauth
+pip install django-apscheduler
+

@@ -1,0 +1,20 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %} Добавить отклик {% endblock title %}
+
+{% block content %}
+<h3>Спасибо за отклик!</h3>
+
+<button> <a href="/board/">Перейти на доску объявлений</a> </button>
+
+<button><a href="{% url 'profile' %}"><u>Мой профиль</u></a></button>
+{% endblock content %}
+
+{% block comments %}
+{% endblock comments %}
+
+{% block sidewidgets %}
+{% endblock sidewidgets %}
+
+{% block footer %}
+{% endblock footer %}

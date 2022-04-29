@@ -1,0 +1,23 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %} Добавить комментарий {% endblock title %}
+
+{% block content %}
+<h3 style="text-align: center;">Добавить отклик:</h3>
+<form method="POST">
+    {% csrf_token %}
+    <p style="text-align: center;">{{ form }} </p>
+
+    <hr>
+    <p style="text-align: center;"> <input type="submit" value="Добавить"></p>
+</form>
+{% endblock content %}
+
+{% block comments %}
+{% endblock comments %}
+
+{% block sidewidgets %}
+{% endblock sidewidgets %}
+
+{% block footer %}
+{% endblock footer %}

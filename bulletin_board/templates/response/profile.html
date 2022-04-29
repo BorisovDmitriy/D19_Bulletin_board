@@ -1,0 +1,103 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %} Профиль пользователя {% endblock title %}
+
+{% block content %}
+<!-- Page content-->
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-8">
+
+                    <!-- Post content-->
+                    <article>
+                        <!-- Post header-->
+                        <header class="mb-4">
+                        <!-- Post title-->
+                        <h1 class="fw-bolder mb-1">
+                            <h2> Профиль пользователя {{request.user.username}} </h2>
+                              {% if user.first_name and user.username %}
+                                <p> Здравствуйте, {{ user.first_name }} {{ user.last_name}} !</p>
+                              {% else %}
+                                <h3>Здравствуйте!</h3>
+                              {% endif %}</h1>
+                        </header>
+                    </article>
+                            <h3>Все Ваши отклики </h3>
+                            <h3>{% if response %} Всего откликов:{{ response|length }} {% endif %}</h3>
+                                {% if user.is_authenticated %}
+                                <p style="text-align: right;"> <a href="{% url 'ad_create' %}">Опубликовать новое объявление </a></p>
+                                {% endif %}
+
+                                <ul class="list-unstyled">
+                                   {% if responses %}
+                                    <li class="media my-4 p-2 border">
+                                        {% for response in responses %}
+                                             <h1>{{ response.text_response }}</h1>
+                                                <p> На объявление: "{{ response.ads }}"</p>
+                                                <p> От: {{ response.user }}</p>
+                                            {% if not response.response_state %}
+                                            <p style="text-align: right;"><button><a href="{% url 'response_accept' response.id %}"><u>Принять отклик</u></a></button></p>
+                                            {% endif %}
+                                            <p style="text-align: right;"><button><a href="{% url 'response_delete' response.id %}"><u>Удалить отклик</u></a></button></p>
+                                            <hr>
+                                        {% endfor %}
+                                    </li>
+                                   {% else %}
+                                     <h2> Откликов нет!  </h2>
+                                   {% endif %}
+                                </ul>
+
+                                <!-- D7.2 начало блока пагинации-->
+
+                                {% if is_paginated%}<!-- Проверяем, что поддерживается постраничный вывод -->
+
+                                <!-- Если доступна предыдущая страница, то даём ссылку на неё и самую первую страницу -->
+                                {% if page_obj.has_previous %}
+                                <a href="?page=1">First</a>
+                                <a href="?page={{page_obj.previous_page_number}}"><<<</a>
+                                {% endif %}
+                                <!-- Показываем только текущую страницу и ближайшие к ней, чтобы список не тянулся и не захламлял страницу -->
+                                {% for num in page_obj.paginator.page_range %}
+                                {% if page_obj.number == num %}
+                                <a>{{ num }}</a>
+                                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <a href="?page={{ num }}">{{ num }}</a>
+                                {% endif %}
+                                {% endfor %}
+                                <!-- Если есть следующая страница, то даём ссылку на неё и на самую последнюю страницу -->
+                                {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}">>>></a>
+                                <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                                {% endif %}
+
+                                {% endif %}
+                                <!-- D7.2 конец блока пагинации-->
+                    <hr>
+                    <hr>
+                </div>
+            </div>
+        </div>
+{% endblock content %}
+
+{% block comments %}
+{% endblock comments %}
+
+{% block sidewidgets %}
+        <!-- Side widgets-->
+            <div class="col-lg-4">
+                <!-- Search widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Поиск</div>
+                        <div class="card-body">
+                            <div class="input-group">
+                                    <form method="GET">
+                                        {{ filter.form }}
+                                        <input type="submit" value="Найти">
+                                    </form>
+                                <input class="form-control" type="text" placeholder="Введите что-то для поиска..." aria-label="Введите что-то для поиска..." aria-describedby="button-search" />
+                                <button class="btn btn-primary" id="button-search" type="button">Готово!</button>
+                            </div>
+                        </div>
+                </div>
+            </div>
+{% endblock sidewidgets %}
