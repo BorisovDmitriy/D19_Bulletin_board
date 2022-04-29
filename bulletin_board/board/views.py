@@ -29,10 +29,6 @@ class AdDetail(DetailView):
         return context
 
 
-class AdSearchList(ListView):
-    pass
-
-
 class AdCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     permission_required = 'board.add_ad'
     template_name = 'board/ad_create.html'
@@ -95,10 +91,6 @@ class ResponseList(LoginRequiredMixin, ListView):
     #         ad_qs = Ad.objects.filter(author__user=user)
     #         filtered.qs.filter(ads__in=ad_qs)
     #     context['filter'] = filtered
-
-
-class ResponseSearchList(ListView):
-    pass
 
 
 class ResponseCreate(LoginRequiredMixin, CreateView):
